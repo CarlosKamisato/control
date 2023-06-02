@@ -3,7 +3,7 @@ pipeline {
 
     tools { 
         maven 'mavenjenkins'
-        jdk 'jenkinsjava'
+        jdk 'jenkisjava'
     }
 
     stages {
