@@ -61,11 +61,9 @@ pipeline {
     post{
         always{
             echo ‘Slack Notification’
-            slackSend channer: ‘#integracion’,
+            slackSend channel: ‘#integracion’,
             color: COLOR_MAP[currentBuild.currentResult], 
-            message: “*${currentBuild.currentResult}: Job ${env.JOB_
-            NAME} build ${env.BUILD_NUMBER}\n More Info at: ${env.BUILD_
-            URL}”
+            message: “*${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}\n More Info at: ${env.BUILD_URL}”
         }
     }
 }
