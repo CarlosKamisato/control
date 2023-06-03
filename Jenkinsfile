@@ -1,20 +1,8 @@
+def COLOR_MAP = [
+    ‘SUCCESS’: ‘good’, 
+    ‘FAILURE’:’danger’, 
+]
 
-
-
- def call(String buildResult) {
-  if ( buildResult == "SUCCESS" ) {
-    slackSend color: "good", message: "Job: ${env.JOB_NAME} with buildnumber ${env.BUILD_NUMBER} was successful"
-  }
-  else if( buildResult == "FAILURE" ) { 
-    slackSend color: "danger", message: "Job: ${env.JOB_NAME} with buildnumber ${env.BUILD_NUMBER} was failed"
-  }
-  else if( buildResult == "UNSTABLE" ) { 
-    slackSend color: "warning", message: "Job: ${env.JOB_NAME} with buildnumber ${env.BUILD_NUMBER} was unstable"
-  }
-  else {
-    slackSend color: "danger", message: "Job: ${env.JOB_NAME} with buildnumber ${env.BUILD_NUMBER} its resulat was unclear"	
-  }
-}
 pipeline {
     agent any 
 
@@ -70,13 +58,14 @@ pipeline {
         }
 
     }
-    post {
-        always {
-	    /* Use slackNotifier.groovy from shared library and provide current build result as parameter */   
+    post{
+        always{
             echo ‘Slack Notification’
             slackSend channer: ‘#integracion’,
- c          olor:call(currentBuild.currentResult)
-            cleanWs()
+            color: COLOR_MAP[currentBuild.currentResult], 
+            message: “*${currentBuild.currentResult}: Job ${env.JOB_
+            NAME} build ${env.BUILD_NUMBER}\n More Info at: ${env.BUILD_
+            URL}”
         }
     }
 }
