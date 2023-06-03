@@ -73,7 +73,9 @@ pipeline {
     post {
         always {
 	    /* Use slackNotifier.groovy from shared library and provide current build result as parameter */   
-            slackNotifier(currentBuild.currentResult)
+            echo ‘Slack Notification’
+            slackSend channer: ‘#integracion’,
+ c          olor:call(currentBuild.currentResult)
             cleanWs()
         }
     }
